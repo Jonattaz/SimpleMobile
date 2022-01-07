@@ -7,11 +7,16 @@ public class CoinPicker : MonoBehaviour
 
     AudioSource coinPickSound;
 
+    float coinPoints = 5f;
+    ScoreManager scoreManager;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-        coinPickSound = GameObject.Find("CoinPickSound").GetComponent<AudioSource>();    
+        coinPickSound = GameObject.Find("CoinPickSound").GetComponent<AudioSource>();
+        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -25,6 +30,7 @@ public class CoinPicker : MonoBehaviour
 
             }
             coinPickSound.Play();
+            scoreManager.score += coinPoints;
         }
     }
 

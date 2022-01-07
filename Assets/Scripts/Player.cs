@@ -21,6 +21,13 @@ public class Player : MonoBehaviour
 
     Animator anim;
 
+    [SerializeField]
+    AudioSource deathSoound;
+
+    [SerializeField]
+    AudioSource jumpSound;
+
+
     // Referência ao colisor do jogador
     Collider2D playerCollider;
 
@@ -42,8 +49,11 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
-            if(grounded)
+            if (grounded)
+            {
+                jumpSound.Play();
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            }
         }
 
         anim.SetBool("Ground", grounded);

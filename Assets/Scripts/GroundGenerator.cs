@@ -20,12 +20,14 @@ public class GroundGenerator : MonoBehaviour
     float minY;
     float maxY;
 
-
     [SerializeField]
     float minGap;
 
     [SerializeField]
     float maxGap;
+
+    CoinGenerator coinGenerator;
+
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +40,8 @@ public class GroundGenerator : MonoBehaviour
         {
             groundWidths[i] = groundPoolers[i].pooledObject.GetComponent<BoxCollider2D>().size.x;
         }
+
+        coinGenerator = FindObjectOfType<CoinGenerator>();
     }
 
     // Update is called once per frame
@@ -56,6 +60,12 @@ public class GroundGenerator : MonoBehaviour
             GameObject ground = groundPoolers[random].GetPooledGameObject();
             ground.transform.position = transform.position;
             ground.SetActive(true);
+
+            coinGenerator.SpawnCoins(
+                transform.position,
+                groundWidths[random]
+                );
+
 
             transform.position = new Vector3(
                transform.position.x + distance, transform.position.y, transform.position.z); 

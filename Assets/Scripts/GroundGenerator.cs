@@ -11,10 +11,28 @@ public class GroundGenerator : MonoBehaviour
     public ObjectPool[] groundPoolers;
     float[] groundWidths;
 
+    [SerializeField]
+    Transform minHeightPoint;
+
+    [SerializeField]
+    Transform maxHeightPoint;
+
+    float minY;
+    float maxY;
+
+
+    [SerializeField]
+    float minGap;
+
+    [SerializeField]
+    float maxGap;
 
     // Start is called before the first frame update
     void Start()
     {
+        minY = minHeightPoint.position.y;
+        maxY = maxHeightPoint.position.y;
+
         groundWidths = new float[groundPoolers.Length];
         for (int i = 0; i < groundPoolers.Length; i++)
         {
@@ -30,8 +48,11 @@ public class GroundGenerator : MonoBehaviour
             int random = Random.Range(0, groundPoolers.Length);
             float distance = groundWidths[random] / 2;
 
+            float gap = Random.Range(minGap, maxGap);
+            float height = Random.Range(minY,maxY);
+
             transform.position = new Vector3(
-                transform.position.x + distance, transform.position.y,transform.position.z);
+                transform.position.x + distance + gap, height,transform.position.z);
             GameObject ground = groundPoolers[random].GetPooledGameObject();
             ground.transform.position = transform.position;
             ground.SetActive(true);
